@@ -34,6 +34,10 @@ struct camposExamen
 {
     char nombre[20];
 };
+struct ordenDivisiones
+{
+    char nombre[20];
+};
 
 class manejadorArchivos
 {
@@ -47,10 +51,13 @@ public:
     bool agregarRegistro(string nombre, string apellido, int edad, string examen);
     QList<QStringList> getRegistros(string fecha);
     QStringList getCamposExamen(string examen);
+
     bool dirExists(const std::string &dirName_in);
     bool eliminarExamen(QString examen);
     bool checkExamenComplejo(QString examen);
     bool agregarExamenComplejo(QString nombre, QList<QStringList> lista);
+
+    void leerArchivoExamenComplejo();
 
 };
 

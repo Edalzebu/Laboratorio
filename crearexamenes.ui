@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Se;eccion de Examen</string>
+   <string>Seleccion de Examen</string>
   </property>
   <widget class="QTreeWidget" name="treeWidget">
    <property name="geometry">

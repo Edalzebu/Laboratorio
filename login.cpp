@@ -7,6 +7,7 @@ login::login(QWidget *parent) :
 {
     ui->setupUi(this);
     connect(&adminCP, SIGNAL(closing()), this, SLOT(onclose()));
+    ui->line_clave->setEchoMode(ui->line_clave->Password);
 }
 
 login::~login()

@@ -9,6 +9,7 @@ crearExamenes::crearExamenes(QWidget *parent) :
     ui->setupUi(this);
     connect(&hemo,SIGNAL(closing()),this,SLOT(isClosing()));
     connect(&plant,SIGNAL(closing()),this,SLOT(isClosing()));
+
 }
 
 crearExamenes::~crearExamenes()
@@ -18,6 +19,7 @@ crearExamenes::~crearExamenes()
 
 void crearExamenes::reload()
 {
+    fManager.leerArchivoExamenComplejo();
     QStringList listaExamenes;
     listaExamenes = fManager.getExamenes();
     for(int i  = 0; i<listaExamenes.length(); i++)

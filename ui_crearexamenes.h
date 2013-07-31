@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'crearexamenes.ui'
 **
-** Created: Sun 14. Jul 18:32:52 2013
+** Created: Sun 28. Jul 19:50:43 2013
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -54,7 +54,7 @@ public:
 
     void retranslateUi(QWidget *crearExamenes)
     {
-        crearExamenes->setWindowTitle(QApplication::translate("crearExamenes", "Se;eccion de Examen", 0, QApplication::UnicodeUTF8));
+        crearExamenes->setWindowTitle(QApplication::translate("crearExamenes", "Seleccion de Examen", 0, QApplication::UnicodeUTF8));
         QTreeWidgetItem *___qtreewidgetitem = treeWidget->headerItem();
         ___qtreewidgetitem->setText(0, QApplication::translate("crearExamenes", "Elija un examen", 0, QApplication::UnicodeUTF8));
         pushButton->setText(QApplication::translate("crearExamenes", "Atras", 0, QApplication::UnicodeUTF8));

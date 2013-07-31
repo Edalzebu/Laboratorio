@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/logos">
+        <file>imagenes/dibujoMicroscopio.png</file>
+        <file>imagenes/images.jpg</file>
+        <file>imagenes/laboratorio.jpg</file>
+        <file>imagenes/13125230.colonia.de.bacterias.patogenas.3d.jpg</file>
+        <file>imagenes/back.jpg</file>
+        <file>imagenes/login.jpg</file>
+    </qresource>
+</RCC>

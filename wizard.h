@@ -5,6 +5,7 @@
 #include <QLineEdit>
 #include <iostream>
 #include <QAbstractButton>
+#include "manejadorarchivos.h"
 using namespace std;
 namespace Ui {
 class Wizard;
@@ -21,17 +22,28 @@ public:
     
 private slots:
 
-    void Wizard_customButtonClicked(int which);
+
     void on_spinBox_valueChanged(int arg1);
     void on_spinBox_2_valueChanged(int arg1);
     void on_line_nombreEx_textChanged(const QString &arg1);
     void changingPage(int pagina);
+
+public slots:
+    void Wizard_NextButton_clicked();
+    void Wizard_BackButton_clicked();
+    void Wizard_FinishButton_clicked();
 
 private:
     Ui::Wizard *ui;
     QList<QLineEdit*> listaEdits;
     QList<QLineEdit*> listaEditsCampos;
     int numeroDivisiones;
+    void changeDivision();
+    QStringList nombresDivisiones;
+    QList <QStringList> divisionesCampos;
+    QString nombreExamen;
+    void agregaraLista();
+    manejadorArchivos fManager;
 };
 
 #endif // WIZARD_H
