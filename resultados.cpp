@@ -88,11 +88,41 @@ void resultados::getInformacion(string examen, QStringList informacion)
             }
         }
     }
+}
 
-    if(examen == "hemograma")
+void resultados::getInformacion2(string examen, QStringList divisiones, QStringList informacion)
+{
+    this->examen = examen;
+    QString name;
+    QDate date;
+    listaPrin = informacion;
+    //nombres,apellido,fecha/edad,doctor,
+    name.push_back(informacion.at(0));
+    name.push_back(" ");
+    name.push_back(informacion.at(1));
+    ui->label_nombre->setText(name);
+    ui->label_Examen->setText(examen.c_str());
+    ui->label_fecha->setText(date.currentDate().toString("dddd,d / MMMM /yyyy"));
+    ui->label_edad->setText(informacion.at(2));
+    ui->label_doctor->setText(informacion.at(3));
+
+    int x=20;
+    int y = 10;
+    for(int i =0; i <divisiones.length(); i++)
     {
+        QGroupBox *division = new QGroupBox(ui->widget);
+        listaGroupbox.push_back(division);
+        QString nameExam = examen.c_str();
+        QStringList listaCampos = fManager.getCamposExamen(examen);
+        for(int j =0; j < fManager.getNumeroCamposDivision(nameExam,QStringList.at(i));j++)
+        {
+
+        }
 
     }
+
+
+
 }
 
 void resultados::on_commandLinkButton_clicked()

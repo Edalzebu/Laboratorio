@@ -47,7 +47,7 @@ void plantillaExamen::getInformacion(QString examen)
             x = 290;
             y=25;
         }
-        if(i==18)
+        if(i==16)
         {
             x=550;
             y=25;

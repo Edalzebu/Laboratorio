@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>641</width>
-    <height>503</height>
+    <height>563</height>
    </rect>
   </property>
   <property name="palette">
@@ -638,7 +638,7 @@ p, li { white-space: pre-wrap; }
      <x>10</x>
      <y>240</y>
      <width>611</width>
-     <height>251</height>
+     <height>311</height>
     </rect>
    </property>
    <property name="font">

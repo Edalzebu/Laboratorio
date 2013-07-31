@@ -19,7 +19,7 @@ public:
     explicit plantillaExamen(QWidget *parent = 0);
     ~plantillaExamen();
     void getInformacion(QString examen);
-    
+
 private slots:
     void on_commandLinkButton_clicked();
 

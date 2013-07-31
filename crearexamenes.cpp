@@ -19,6 +19,7 @@ crearExamenes::~crearExamenes()
 
 void crearExamenes::reload()
 {
+
     fManager.leerArchivoExamenComplejo();
     QStringList listaExamenes;
     listaExamenes = fManager.getExamenes();

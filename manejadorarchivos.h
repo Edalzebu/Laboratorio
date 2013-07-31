@@ -58,6 +58,7 @@ public:
     bool agregarExamenComplejo(QString nombre, QList<QStringList> lista);
 
     void leerArchivoExamenComplejo();
+    int getNumeroCamposDivision(QString examen, QString Division);
 
 };
 

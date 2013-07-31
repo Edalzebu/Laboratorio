@@ -16,9 +16,9 @@ void manejadorArchivos::checkingArch()
     {
         _mkdir("bin\\examenes\\");
     }
-    if(!dirExists("bin\\Examenes Complejos"))
+    if(!dirExists("bin\\ExamenesComplejos"))
     {
-        _mkdir("bin\\Examenes Complejos");
+        _mkdir("bin\\ExamenesComplejos");
     }
 }
 
@@ -106,31 +106,34 @@ QStringList manejadorArchivos::getExamenes()
 
     archivo.open(ss.str().c_str(), ios::in | ios::binary);
     archivo2.open("bin\\examenescomplejos.examen",ios::in | ios::binary );
-    if(archivo.is_open() && archivo2.is_open())
+    if(archivo.is_open())
     {
-        archivo2.seekg(0, ios_base::end);
         archivo.seekg(0,ios_base::end);
-        int sizeArchivo = archivo.tellg();
-        int sizeArchivo2 = archivo2.tellg();
-        archivo2.seekg(0, ios_base::beg);
+        int sizeArchivo = archivo.tellg();        
         archivo.seekg(0,ios_base::beg);
         while(archivo.tellg() < sizeArchivo)
         {            
             cout << "Entro en archivo.tellg" << endl;
             nombresExamenes t;
             archivo.read(reinterpret_cast<char *> (&t),sizeof(t));
-
             lista << t.nombre;
         }
+
+        archivo.close();
+    }
+    if(archivo2.is_open())
+    {
+        archivo2.seekg(0, ios_base::end);
+        int sizeArchivo2 = archivo2.tellg();
+        archivo2.seekg(0, ios_base::beg);
         while(archivo2.tellg() < sizeArchivo2)
         {
-            cout << "Entro en archivo2.tellg" << endl;
-            nombresExamenes t;
-            archivo.read(reinterpret_cast<char *> (&t),sizeof(t));
 
+            nombresExamenes t;
+            archivo2.read(reinterpret_cast<char *> (&t),sizeof(t));
             lista << t.nombre;
         }
-        archivo.close();
+        archivo2.close();
     }
     return lista;
 }
@@ -228,8 +231,50 @@ QStringList manejadorArchivos::getCamposExamen(string examen)
             lista << camps.nombre;
         }
     }
+    fstream archivo2;
+    stringstream ss2;
+    ss2 << "bin\\ExamenesComplejos\\" << examen.c_str() << "\\ordendivisiones.edta";
 
+    archivo2.open(ss2.str().c_str(),ios::in | ios::binary);
 
+    if(archivo2.is_open())
+    {
+
+        QStringList nombresDivisiones;
+        archivo2.seekg(0, ios_base::end);
+        int sizeArchivo2 = archivo2.tellg();
+        archivo2.seekg(0, ios_base::beg);
+
+        while(archivo2.tellg() < sizeArchivo2)
+        {
+            nombresExamenes t;
+            archivo2.read(reinterpret_cast<char *> (&t), sizeof(t));
+            nombresDivisiones << t.nombre;
+            cout << "*"<< t.nombre << endl;
+        }
+        for(int i =0; i < nombresDivisiones.length(); i++)
+        {
+            fstream archivo3;
+            stringstream ss3;
+            ss3 << "bin\\ExamenesComplejos\\" << examen.c_str() << "\\" <<nombresDivisiones.at(i).toStdString().c_str() << ".edta";
+            archivo3.open(ss3.str().c_str(), ios::in | ios::binary);
+
+            if(archivo3.is_open())
+            {
+                archivo3.seekg(0,ios_base::end);
+                int sizeArchivo3 = archivo3.tellg();
+                archivo3.seekg(0,ios_base::beg);
+                while(archivo3.tellg() < sizeArchivo3)
+                {
+                    camposExamen t;
+                    archivo3.read(reinterpret_cast<char *> (&t),sizeof(t));
+                    lista << t.nombre;
+
+                }
+            }
+        }
+
+    }
     return lista;
 }
 
@@ -316,7 +361,7 @@ bool manejadorArchivos::agregarExamenComplejo(QString nombre, QList<QStringList>
         cout << "[Agregar Examen Complejo] Entro a agregar ExamenComplejo " << endl;
         stringstream ss, sstmp;
         fstream archivo;
-        ss << "bin\\Examenes Complejos\\" << nombre.toStdString().c_str();
+        ss << "bin\\ExamenesComplejos\\" << nombre.toStdString().c_str();
 
         archivo.open("bin\\examenescomplejos.examen",ios::binary | ios::app | ios::out);
 
@@ -328,9 +373,9 @@ bool manejadorArchivos::agregarExamenComplejo(QString nombre, QList<QStringList>
             archivo.write(reinterpret_cast<char *> (&t),sizeof(t));
             _mkdir(ss.str().c_str());
 
-            sstmp<< "bin\\Examenes Complejos\\" <<nombre.toStdString() << "\\ordendivisiones.edta";
+            sstmp<< "bin\\ExamenesComplejos\\" <<nombre.toStdString() << "\\ordendivisiones.edta";
             fstream archivo3;
-            cout << "SSTMP: " << sstmp.str().c_str() << endl;
+
             archivo3.open(sstmp.str().c_str(), ios::out | ios::binary | ios::app);
 
             for(int i = 0 ; i<lista.length(); i++)
@@ -342,8 +387,8 @@ bool manejadorArchivos::agregarExamenComplejo(QString nombre, QList<QStringList>
                 fstream archivo2;
                 stringstream ss2;
 
-                ss2 << "bin\\Examenes Complejos\\" <<nombre.toStdString() << "\\" << lista.at(i).at(0).toStdString().c_str() << ".edta";
-                cout << "SS2: " << ss2.str().c_str() << endl;
+                ss2 << "bin\\ExamenesComplejos\\" <<nombre.toStdString() << "\\" << lista.at(i).at(0).toStdString().c_str() << ".edta";
+
                 archivo2.open(ss2.str().c_str(), ios::out | ios::binary | ios::app);
                 for(int j = 1; j < lista.at(i).length(); j++)
                 {
@@ -351,10 +396,11 @@ bool manejadorArchivos::agregarExamenComplejo(QString nombre, QList<QStringList>
                     camposExamen t;
                     strcpy(t.nombre,lista.at(i).at(j).toStdString().c_str());
                     archivo2.write(reinterpret_cast <char *> (&t), sizeof(t));
-                    archivo2.close();
                 }
+                archivo2.close();
             }
             archivo.close();
+
             archivo3.close();
             return true;
 
@@ -373,7 +419,7 @@ bool manejadorArchivos::agregarExamenComplejo(QString nombre, QList<QStringList>
 void manejadorArchivos::leerArchivoExamenComplejo()
 {
     fstream archivo;
-    archivo.open("bin\\examenescomplejos.examen",ios::binary | ios::in);
+    archivo.open("bin\\ExamenesComplejos\\Orina\\Microscopio.edta",ios::binary | ios::in);
     archivo.seekg(0,ios_base::end);
     int sizeArchivo = archivo.tellg();
     archivo.seekg(0,ios_base::beg);
@@ -382,10 +428,31 @@ void manejadorArchivos::leerArchivoExamenComplejo()
         cout << "Archivo esta abierto " << endl;
         while(archivo.tellg() < sizeArchivo)
         {
-            nombresExamenes t;
+            camposExamen t;
             archivo.read(reinterpret_cast <char *> (&t),sizeof(t));
-            cout << "Examen Complejos: " << t.nombre << endl;
+            cout << "Campos en Microscopio: " << t.nombre << endl;
         }
     }
 
+}
+
+int manejadorArchivos::getNumeroCamposDivision(QString examen, QString Division)
+{
+    fstream archivo;
+    archivo.open("bin\\ExamenesComplejos\\"<<examen.toStdString().c_str()<<"\\"<<Division.toStdString().c_str()<< ".edta",ios::binary | ios::in);
+    archivo.seekg(0,ios_base::end);
+    int sizeArchivo = archivo.tellg();
+    int numeroCampos=0;
+    archivo.seekg(0,ios_base::beg);
+    if(archivo.is_open())
+    {
+        cout << "Archivo esta abierto " << endl;
+        while(archivo.tellg() < sizeArchivo)
+        {
+            camposExamen t;
+            archivo.read(reinterpret_cast <char *> (&t),sizeof(t));
+            numeroCampos++;
+        }
+    }
+    return numeroCampos;
 }

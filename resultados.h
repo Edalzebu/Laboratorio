@@ -6,6 +6,7 @@
 #include <QLineEdit>
 #include <QLabel>
 #include "manejadorarchivos.h"
+#include <QGroupBox>
 
 using namespace std;
 namespace Ui {
@@ -20,6 +21,7 @@ public:
     explicit resultados(QWidget *parent = 0);
     ~resultados();
     void getInformacion(string examen, QStringList informacion);
+    void getInformacion2(string examen, QStringList divisiones, QStringList informacion);
     
 private slots:
     void on_commandLinkButton_clicked();
@@ -29,6 +31,7 @@ private:
     manejadorArchivos fManager;
     QStringList listaPrin;
     string examen;
+    QList <QGroupBox *> listaGroupbox;
 signals:
     void closing();
 };
